@@ -16,7 +16,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/odps-sdk-mapred-0.17.8-jar-with-dependencies.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.google.code.externalsortinginjava</groupId>
+            <artifactId>google-externalsorting</artifactId>
+            <version>0.1.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/externalsortinginjava-0.1.9.jar</systemPath>
+        </dependency>
     </dependencies>
 
 </project>

@@ -5,9 +5,11 @@ import com.aliyun.odps.OdpsException;
 import com.aliyun.odps.conf.Configured;
 import com.aliyun.odps.counter.Counters;
 import com.aliyun.odps.conf.Configuration;
+import edu.tsinghua.bigdata.MRImpl;
 
 public class RunningJobImpl implements RunningJob {
-  Configuration job;
+  private Thread task;
+  private  MRImpl MR;
 
   @Override public Counters getCounters(){
   	return new Counters();
@@ -57,14 +59,20 @@ public class RunningJobImpl implements RunningJob {
   }
 
   @Override public void waitForCompletion(){
-  	while(true)
-  	{
-	  	System.err.println("running!!!");
-  	}
+      try {
+        this.task.start();
+        this.task.join();
+      } catch (InterruptedException e) {
+          e.printStackTrace();
+      }
   }
 
-  // Map and Reduce Implementation details
-  public void setConf(Configuration _job){
-  	this.job = _job;	//set JobConf
+  public void setMapperReducer(Mapper _map, Reducer _red){
+    Mapper d = _map;
+  }
+
+  public void setInputOutput(String _input, String _output){
+    MR = new MRImpl(_input, _output);
+    this.task = new Thread(MR);
   }
 }
