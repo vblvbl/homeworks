@@ -29,7 +29,7 @@ public class RecordImpl implements Record{
 
     @Override
     public void set(int i, Object o) {
-        this.values[i]=0;
+        this.values[i]= o;
     }
 
     @Override

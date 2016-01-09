@@ -15,8 +15,23 @@ import java.io.BufferedInputStream;
 import com.aliyun.odps.counter.Counter;
 import java.util.Iterator;
 import com.aliyun.odps.mapred.TaskId;
+import com.aliyun.odps.OdpsType;
+
+// Considering use ArrayList to store Record
+import java.util.ArrayList;
 
 public class TaskContextImpl implements Mapper.TaskContext {
+	public Long nb_records;
+	public ArrayList<RecordImpl> records;
+	public ArrayList<RecordImpl> keys;
+	public ArrayList<RecordImpl> values;
+	public TaskContextImpl(){
+		nb_records = 0L;
+		records = new ArrayList();
+		keys = new ArrayList();
+		values = new ArrayList();
+	}
+
 	@Override
 	public long getCurrentRecordNum(){
 		return 1;
@@ -64,12 +79,19 @@ public class TaskContextImpl implements Mapper.TaskContext {
 
 	@Override
 	public Record createMapOutputKeyRecord() throws IOException{
-		return null;
+		Object[] col = new Object[2];
+		col[0] = new String("0");
+		col[1] = new Long(1);
+		return new RecordImpl(col);
 	}
 
 	@Override
 	public Record createMapOutputValueRecord() throws IOException{
-		return null;
+		Object[] col = new Object[2];
+		col[0] = new String("0");
+		col[1] = new Long(1);
+		RecordImpl r = new RecordImpl(col);
+		return new RecordImpl(col);
 	}
 
 	@Override
@@ -104,6 +126,8 @@ public class TaskContextImpl implements Mapper.TaskContext {
 
 	@Override
 	public void write(Record record) throws IOException{
+    	records.add((RecordImpl)record);
+    	nb_records += 1L;
     }
 
     @Override
@@ -114,6 +138,9 @@ public class TaskContextImpl implements Mapper.TaskContext {
     @Override
     public void write(Record key,
            Record value) throws IOException{
+    	keys.add((RecordImpl)key);
+    	values.add((RecordImpl)value);
+    	nb_records += 1L;
     }
 
     @Override

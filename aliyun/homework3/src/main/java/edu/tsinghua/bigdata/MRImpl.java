@@ -41,23 +41,39 @@ public class MRImpl implements Runnable {
             File mapResultFile = File.createTempFile("MapResult","csv");
             mapResultFile.deleteOnExit();
             CsvReader reader = new CsvReader(new FileReader(inFile));
-            CsvWriter writer = new CsvWriter(new FileWriter(mapResultFile), ',');
+            
+            TaskContextImpl context = new TaskContextImpl();
             while (reader.readRecord()) {
                 String[] values = reader.getValues();
-                TaskContextImpl context = new TaskContextImpl();
                 Long NbR = 0L;
                 for (String w : values) {
-                    //mapper.setup(context);  
-                    Column[] test = new Column[]{new Column(w, OdpsType.STRING)};
+                    mapper.setup(context);  
+                    Column[] test = new Column[1];
+                    test[0] = new Column("word", OdpsType.STRING);
                     ArrayRecord r = new ArrayRecord(test);
-                    //mapper.map(NbR, r, context);
+                    r.setString(0, w);
+                    //System.out.println(r.getColumnCount());
+                    //System.out.println(r.get(0));
+                    mapper.map(NbR, r, context);
                     //writer.write(w);
                     //writer.write("1");
                     //writer.endRecord();
                     NbR = NbR + 1L;
                 }
             }
+            
+            System.out.println(context.nb_records);
+            // export to external file
+            CsvWriter writer = new CsvWriter(new FileWriter(mapResultFile), ',');
+            for(int i = 0; i < context.nb_records; ++i){
+                RecordImpl key = context.keys.get(i);
+                RecordImpl value = context.values.get(i);
+                writer.write(key.get(0).toString());
+                writer.write(value.get(0).toString());
+                writer.endRecord();
+            }
             writer.close();
+
             reader.close();
 
             //sort
