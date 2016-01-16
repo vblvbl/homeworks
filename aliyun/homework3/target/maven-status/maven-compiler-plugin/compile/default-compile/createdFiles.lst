@@ -1,0 +1,17 @@
+edu\tsinghua\bigdata\RecordImpl.class
+edu\tsinghua\bigdata\TestPlanA.class
+edu\tsinghua\bigdata\FuckAlibaba$1.class
+edu\tsinghua\bigdata\FuckAlibaba.class
+com\aliyun\odps\mapred\WordCount$TokenizerMapper.class
+com\aliyun\odps\mapred\WordCount$SumReducer.class
+edu\tsinghua\bigdata\WordCountPlanA.class
+com\aliyun\odps\mapred\JobRunnerImpl.class
+com\aliyun\odps\mapred\WordCount$SumCombiner.class
+edu\tsinghua\bigdata\TestFile.class
+edu\tsinghua\bigdata\SBAlibaba.class
+com\aliyun\odps\mapred\JobRunnerImpl$SplitRunnable.class
+com\aliyun\odps\mapred\WordCount.class
+edu\tsinghua\bigdata\RunningJobImpl$1.class
+edu\tsinghua\bigdata\RecordReaderImpl.class
+com\aliyun\odps\mapred\JobRunnberImplPlanB.class
+edu\tsinghua\bigdata\RunningJobImpl.class

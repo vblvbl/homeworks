@@ -113,12 +113,17 @@ public class WordCount {
       System.err.println("Usage: wordcount <in_table> <out_table>");
       System.exit(2);
     }
+
+
     JobConf job = new JobConf();
     job.setMapperClass(TokenizerMapper.class);
     job.setCombinerClass(SumCombiner.class);
     job.setReducerClass(SumReducer.class);
     job.setMapOutputKeySchema(new Column[] { new Column("word", OdpsType.STRING) });
     job.setMapOutputValueSchema(new Column[] { new Column("count", OdpsType.BIGINT) });
+
+//    InputUtils.addTable(TableInfo.builder().tableName("/Users/lx/Desktop/workspace/java/homework/Archive/test.txt").build(), job);
+//    OutputUtils.addTable(TableInfo.builder().tableName("/Users/lx/Desktop/workspace/java/homework/Archive/fuckalibaba_zf.csv").build(), job);
 
     InputUtils.addTable(TableInfo.builder().tableName(args[0]).build(), job);
     OutputUtils.addTable(TableInfo.builder().tableName(args[1]).build(), job);
