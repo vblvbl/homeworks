@@ -12,7 +12,7 @@
 #include <random>
 #include <functional> 
 #include <ctime>
-#include<iomanip>
+#include <iomanip>
 
 struct City{
 	char name;
